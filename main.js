@@ -78,3 +78,9 @@ const mainMenuTemplate = [
     ]
   }
 ];
+
+// If mac, add empty object to Menu
+if (proccess.platform == "darwin") {
+  // unshift method insert a new object in the begging of the array
+  mainMenuTemplate.unshift({});
+}
