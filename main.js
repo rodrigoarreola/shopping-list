@@ -49,6 +49,10 @@ function createAddWindow(){
     protocol: 'file:',
     slashes: true
   }));
+  //Garbage collection handler
+  addWindow.on('close', function(){
+    addWindow = null;
+  })
 }
 
 // Create menu template
