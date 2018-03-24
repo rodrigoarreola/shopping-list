@@ -2,7 +2,7 @@ const electron = require('electron');
 const url = require('url');
 const path = require('path');
 
-const {app, BrowserWindow, Menu, globalShortcut} = electron;
+const {app, BrowserWindow, Menu, globalShortcut, ipcMain} = electron;
 
 let mainWindow;
 let addWindow;
@@ -32,7 +32,8 @@ app.on('ready', function(){
      app.quit();
    });
   globalShortcut.register('CommandOrControl+I', () => {
-    mainWindow.webContents.openDevTools();
+    mainWindow.openDevTools();
+    addWindow.openDevTools();
   });
 
 });
@@ -58,6 +59,12 @@ function createAddWindow(){
   })
 }
 
+// Catch item:admin
+ipcMain.on('item:add', function(e, item){
+  // console.log(item);
+  mainWindow.webContents.send('item:add', item);
+  addWindow.close();
+});
 // Create menu template
 const mainMenuTemplate = [
   {
