@@ -30,7 +30,10 @@ app.on('ready', function(){
   //Register a shortcut
   globalShortcut.register('CommandOrControl+Q', () => {
      app.quit();
-   })
+   });
+  globalShortcut.register('CommandOrControl+I', () => {
+    mainWindow.webContents.openDevTools();
+  });
 
 });
 
@@ -80,7 +83,25 @@ const mainMenuTemplate = [
 ];
 
 // If mac, add empty object to Menu
-if (proccess.platform == "darwin") {
+if (process.platform == "darwin") {
   // unshift method insert a new object in the begging of the array
   mainMenuTemplate.unshift({});
+}
+
+// Add developer tools itms if not in production
+if (process.env.NOD_ENV !== 'production') {
+  mainMenuTemplate.push({
+    label: 'Developer Tools',
+    submenu:[
+      {
+        label: 'Toggle DevTools',
+        click(item, focusedWindow){
+          focusedWindow.toggleDevTools();
+        }
+      },
+      {
+        role: 'reload'
+      }
+    ]
+  })
 }
