@@ -4,6 +4,8 @@ const path = require('path');
 
 const {app, BrowserWindow, Menu, globalShortcut, ipcMain} = electron;
 
+
+
 let mainWindow;
 let addWindow;
 
